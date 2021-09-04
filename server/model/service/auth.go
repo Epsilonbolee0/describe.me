@@ -18,7 +18,7 @@ type AuthService struct {
 }
 
 func NewAuthService(userRepo *repo.UserRepository) *AuthService {
-	return &AuthService{userRepo: userRepo}
+	return &AuthService{userRepo}
 }
 
 func (auth *AuthService) Login(login, password string) map[string]interface{} {
@@ -27,9 +27,9 @@ func (auth *AuthService) Login(login, password string) map[string]interface{} {
 	case nil:
 		break
 	case gorm.ErrRecordNotFound:
-		return utils.Message("User not found")
+		return utils.NotFound()
 	default:
-		return utils.Message("Error occured while creating user")
+		return utils.ErrorOccured()
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
@@ -64,12 +64,12 @@ func (auth *AuthService) Register(key, login, password string) map[string]interf
 	user.Password = string(hashedPassword)
 
 	if err := auth.userRepo.Create(&user); err != nil {
-		return utils.Message("Failure occured while creating user")
+		return utils.ErrorOccured()
 	}
 
 	user.Password = ""
 
-	response := utils.Message("User has been created")
+	response := utils.Created()
 	response["user"] = user
 	return response
 }

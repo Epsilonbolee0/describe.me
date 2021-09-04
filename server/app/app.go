@@ -40,6 +40,7 @@ func setupControllers(router *mux.Router) {
 
 	setupAuthController(conn, router)
 	setupProfileController(conn, router)
+	setupDescribeController(conn, router)
 }
 
 func setupAuthController(conn *gorm.DB, router *mux.Router) {
@@ -52,4 +53,10 @@ func setupProfileController(conn *gorm.DB, router *mux.Router) {
 	userRepo := repo.NewUserRepository(conn)
 	profileService := service.NewProfileService(userRepo)
 	controller.SetupProfileController(profileService, router)
+}
+
+func setupDescribeController(conn *gorm.DB, router *mux.Router) {
+	functionRepo := repo.NewFunctionRepository(conn)
+	describeService := service.NewDescribeService(functionRepo)
+	controller.SetupDescribeController(describeService, router)
 }

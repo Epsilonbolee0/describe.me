@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-func InvalidRequest() map[string]interface{} {
-	return Message("Invalid Request")
-}
-
 func Message(message string) map[string]interface{} {
 	return map[string]interface{}{"message": message}
 }

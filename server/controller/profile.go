@@ -28,7 +28,7 @@ func (controller *ProfileController) Info(w http.ResponseWriter, r *http.Request
 	var resp map[string]interface{}
 
 	if login, err := utils.LoginFromCookie(r); err != nil {
-		resp = utils.Message("Cookie not found!")
+		resp = utils.NoCookie()
 	} else {
 		resp = controller.profileService.Info(login)
 	}
@@ -40,7 +40,7 @@ func (controller *ProfileController) CurrentKey(w http.ResponseWriter, r *http.R
 	var resp map[string]interface{}
 
 	if login, err := utils.LoginFromCookie(r); err != nil {
-		resp = utils.Message("Cookie not found!")
+		resp = utils.NoCookie()
 	} else {
 		resp = controller.profileService.CurrentKey(login)
 	}
@@ -57,7 +57,7 @@ func (controller *ProfileController) UpdateName(w http.ResponseWriter, r *http.R
 	}
 
 	if login, err := utils.LoginFromCookie(r); err != nil {
-		resp = utils.Message("Cookie not found!")
+		resp = utils.NoCookie()
 	} else {
 		resp = controller.profileService.UpdateName(login, dto.Name)
 	}
@@ -74,7 +74,7 @@ func (controller *ProfileController) UpdateGroup(w http.ResponseWriter, r *http.
 	}
 
 	if login, err := utils.LoginFromCookie(r); err != nil {
-		resp = utils.Message("Cookie not found!")
+		resp = utils.NoCookie()
 	} else {
 		resp = controller.profileService.UpdateGroup(login, dto.Group)
 	}
@@ -91,7 +91,7 @@ func (controller *ProfileController) UpdateSex(w http.ResponseWriter, r *http.Re
 	}
 
 	if login, err := utils.LoginFromCookie(r); err != nil {
-		resp = utils.Message("Cookie not found!")
+		resp = utils.NoCookie()
 	} else {
 		resp = controller.profileService.UpdateSex(login, dto.Sex)
 	}
