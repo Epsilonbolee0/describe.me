@@ -10,7 +10,7 @@ type FunctionRepository struct {
 }
 
 func NewFunctionRepository(conn *gorm.DB) *FunctionRepository {
-	return &FunctionRepository{Conn: conn}
+	return &FunctionRepository{conn}
 }
 
 func (repo *FunctionRepository) List(languages []uint) ([]domain.Function, error) {
@@ -25,7 +25,7 @@ func isDisplayed(conn *gorm.DB) *gorm.DB {
 
 func writtenIn(languages []uint) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		return db.Where("language_id IN (?)", languages)
+		return db.Where("language IN (?)", languages)
 	}
 }
 

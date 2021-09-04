@@ -52,6 +52,7 @@ func GetConnection() *gorm.DB {
 	conn.Debug().AutoMigrate(
 		&domain.User{},
 		&domain.Function{},
+		&domain.Language{},
 	)
 
 	return conn

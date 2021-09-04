@@ -75,3 +75,20 @@ func (profile *ProfileService) UpdateSex(login string, sex bool) map[string]inte
 
 	return utils.Updated()
 }
+
+func (profile *ProfileService) AddPreferredLanguage(login string, id uint) map[string]interface{} {
+	profile.userRepo.AddPreferredLanguage(login, id)
+	return utils.Created()
+}
+
+func (profile *ProfileService) DeletePreferredLanguage(login string, id uint) map[string]interface{} {
+	profile.userRepo.DeletePreferredLanguage(login, id)
+	return utils.Deleted()
+}
+
+func (profile *ProfileService) ListPreferredLanguages(login string) map[string]interface{} {
+	preferredLanguages := profile.userRepo.ListPreferredLanguages(login)
+	resp := utils.Found()
+	resp["preferred_languages"] = preferredLanguages
+	return resp
+}

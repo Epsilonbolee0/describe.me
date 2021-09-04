@@ -10,7 +10,7 @@ type UserRepository struct {
 }
 
 func NewUserRepository(conn *gorm.DB) *UserRepository {
-	return &UserRepository{Conn: conn}
+	return &UserRepository{conn}
 }
 
 func (repo *UserRepository) Create(user *domain.User) error {
@@ -21,6 +21,25 @@ func (repo *UserRepository) Find(login string) (domain.User, error) {
 	var user domain.User
 	err := repo.Conn.Where("login = ?", login).First(&user).Error
 	return user, err
+}
+
+func (repo *UserRepository) ListPreferredLanguages(login string) []domain.Language {
+	var languages []domain.Language
+	user := domain.User{Login: login}
+	repo.Conn.Model(&user).Association("PreferredLanguages").Find(&languages)
+	return languages
+}
+
+func (repo *UserRepository) AddPreferredLanguage(login string, id uint) {
+	language := domain.Language{ID: id}
+	user := domain.User{Login: login}
+	repo.Conn.Model(&user).Association("PreferredLanguages").Append(&language)
+}
+
+func (repo *UserRepository) DeletePreferredLanguage(login string, id uint) {
+	language := domain.Language{ID: id}
+	user := domain.User{Login: login}
+	repo.Conn.Model(&user).Association("PreferredLanguages").Delete(&language)
 }
 
 func (repo *UserRepository) UpdateName(login string, name string) error {
