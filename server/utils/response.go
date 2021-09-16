@@ -35,3 +35,7 @@ func NoCookie() map[string]interface{} {
 func CantDelete() map[string]interface{} {
 	return Message("Can not delete")
 }
+
+func NoRight() map[string]interface{} {
+	return Message("No right")
+}

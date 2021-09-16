@@ -23,6 +23,12 @@ func (repo *UserRepository) Find(login string) (domain.User, error) {
 	return user, err
 }
 
+func (repo *UserRepository) IsAdmin(login string) (bool, error) {
+	var user domain.User
+	err := repo.Conn.Where("login = ?", login).First(&user).Error
+	return user.IsAdmin, err
+}
+
 func (repo *UserRepository) ListPreferredLanguages(login string) []domain.Language {
 	var languages []domain.Language
 	user := domain.User{Login: login}

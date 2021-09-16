@@ -9,10 +9,29 @@ import (
 
 type FunctionService struct {
 	functionRepo *repo.FunctionRepository
+	userRepo     *repo.UserRepository
 }
 
-func NewFunctionService(functionRepo *repo.FunctionRepository) *FunctionService {
-	return &FunctionService{functionRepo}
+func NewFunctionService(functionRepo *repo.FunctionRepository, userRepo *repo.UserRepository) *FunctionService {
+	return &FunctionService{functionRepo, userRepo}
+}
+
+func (function *FunctionService) List(login string) map[string]interface{} {
+	languages := function.userRepo.ListPreferredLanguages(login)
+
+	idSlice := make([]uint, len(languages))
+	for index, language := range languages {
+		idSlice[index] = language.ID
+	}
+
+	functions, err := function.functionRepo.List(idSlice)
+	if err != nil {
+		return utils.ErrorOccured()
+	}
+
+	response := utils.Found()
+	response["functions"] = functions
+	return response
 }
 
 func (function *FunctionService) Create(lang uint, code string) map[string]interface{} {

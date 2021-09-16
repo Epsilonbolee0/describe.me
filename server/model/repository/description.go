@@ -15,7 +15,7 @@ func NewDescriptionRepository(conn *gorm.DB) *DescriptionRepository {
 
 func (repo *DescriptionRepository) ListByFunction(functionID uint) ([]string, error) {
 	var descriptions []string
-	err := repo.Conn.Model(&domain.Description{}).Where("function_id = ?", functionID).Pluck("content", &descriptions).Error
+	err := repo.Conn.Model(&domain.Description{FunctionID: functionID}).Pluck("content", &descriptions).Error
 	return descriptions, err
 }
 
@@ -28,12 +28,9 @@ func (repo *DescriptionRepository) Delete(id uint) error {
 }
 
 func (repo *DescriptionRepository) Rating(id uint) int {
-	description := domain.Description{ID: id}
-
-	likeCnt := repo.Conn.Model(&description).Association("Likes").Count()
-	dislikeCnt := repo.Conn.Model(&description).Association("Dislikes").Count()
-
-	return int(likeCnt - dislikeCnt)
+	var rating int
+	repo.Conn.Raw("SELECT * FROM description_rating(?)", id).Scan(&rating)
+	return rating
 }
 
 func (repo *DescriptionRepository) Like(login string, descriptionID uint) {

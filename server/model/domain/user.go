@@ -1,5 +1,7 @@
 package domain
 
+import "gorm.io/gorm"
+
 type User struct {
 	Login    string `json:"login" gorm:"primaryKey"`
 	Password string `json:"password,omitempty"`
@@ -10,6 +12,17 @@ type User struct {
 	Likes              []Function `json:",omitempty" gorm:"many2many:likes"`
 	Dislikes           []Function `json:",omitempty" gorm:"many2many:dislikes"`
 	PreferredLanguages []Language `json:",omitempty" gorm:"many2many:preferred_languages"`
+}
+
+func (u *User) AfterCreate(tx *gorm.DB) (err error) {
+	var count int64
+	tx.Model(u).Count(&count)
+
+	if count == 0 {
+		tx.Model(u).Update("is_admin", true)
+	}
+
+	return
 }
 
 type UserAuthDTO struct {

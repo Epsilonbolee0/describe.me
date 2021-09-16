@@ -45,9 +45,14 @@ func (controller *LanguageController) Create(w http.ResponseWriter, r *http.Requ
 	dto := &domain.LanguageDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
-		resp = utils.InvalidRequest()
+		utils.Respond(w, utils.InvalidRequest())
+		return
+	}
+
+	if login, err := utils.LoginFromCookie(r); err != nil {
+		resp = utils.NoCookie()
 	} else {
-		resp = controller.languageService.Create(dto.Name)
+		resp = controller.languageService.Create(login, dto.Name)
 	}
 
 	utils.Respond(w, resp)
@@ -58,9 +63,14 @@ func (controller *LanguageController) Delete(w http.ResponseWriter, r *http.Requ
 	dto := &domain.LanguageDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
-		resp = utils.InvalidRequest()
+		utils.Respond(w, utils.InvalidRequest())
+		return
+	}
+
+	if login, err := utils.LoginFromCookie(r); err != nil {
+		resp = utils.NoCookie()
 	} else {
-		resp = controller.languageService.Delete(dto.ID)
+		resp = controller.languageService.Delete(login, dto.ID)
 	}
 
 	utils.Respond(w, resp)

@@ -17,6 +17,7 @@ type FunctionController struct {
 func SetupFunctionController(functionService *service.FunctionService, router *mux.Router) {
 	controller := &FunctionController{functionService}
 
+	router.HandleFunc("/function/list", controller.List).Methods("GET")
 	router.HandleFunc("/function/add", controller.Create).Methods("POST")
 	router.HandleFunc("/function/find", controller.Find).Methods("GET")
 	router.HandleFunc("/function/rating", controller.Rating).Methods("GET")
@@ -25,6 +26,18 @@ func SetupFunctionController(functionService *service.FunctionService, router *m
 	router.HandleFunc("/function/like", controller.Like).Methods("PATCH")
 	router.HandleFunc("/function/dislike", controller.Dislike).Methods("PATCH")
 	router.HandleFunc("/function/indifferent", controller.Indifferent).Methods("PATCH")
+}
+
+func (controller *FunctionController) List(w http.ResponseWriter, r *http.Request) {
+	var resp map[string]interface{}
+
+	if login, err := utils.LoginFromCookie(r); err != nil {
+		resp = utils.NoCookie()
+	} else {
+		resp = controller.functionService.List(login)
+	}
+
+	utils.Respond(w, resp)
 }
 
 func (controller *FunctionController) Create(w http.ResponseWriter, r *http.Request) {

@@ -8,13 +8,18 @@ import (
 
 type LanguageService struct {
 	languageRepo *repo.LanguageRepository
+	userRepo     *repo.UserRepository
 }
 
-func NewLanguageService(languageRepo *repo.LanguageRepository) *LanguageService {
-	return &LanguageService{languageRepo}
+func NewLanguageService(languageRepo *repo.LanguageRepository, userRepo *repo.UserRepository) *LanguageService {
+	return &LanguageService{languageRepo, userRepo}
 }
 
-func (lang *LanguageService) Create(name string) map[string]interface{} {
+func (lang *LanguageService) Create(login, name string) map[string]interface{} {
+	if ok, err := lang.userRepo.IsAdmin(login); err != nil || !ok {
+		return utils.NoRight()
+	}
+
 	languageBuilder := builder.NewLanguageBuilder()
 	language := languageBuilder.Name(name).Build()
 
@@ -47,7 +52,11 @@ func (lang *LanguageService) Find(name string) map[string]interface{} {
 	return resp
 }
 
-func (lang *LanguageService) Delete(id uint) map[string]interface{} {
+func (lang *LanguageService) Delete(login string, id uint) map[string]interface{} {
+	if ok, err := lang.userRepo.IsAdmin(login); err != nil || !ok {
+		return utils.NoRight()
+	}
+
 	if err := lang.languageRepo.Delete(id); err != nil {
 		return utils.CantDelete()
 	}

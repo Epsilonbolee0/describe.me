@@ -58,8 +58,9 @@ func setupProfileController(conn *gorm.DB, router *mux.Router) {
 }
 
 func setupFunctionController(conn *gorm.DB, router *mux.Router) {
+	userRepo := repo.NewUserRepository(conn)
 	functionRepo := repo.NewFunctionRepository(conn)
-	functionService := service.NewFunctionService(functionRepo)
+	functionService := service.NewFunctionService(functionRepo, userRepo)
 	controller.SetupFunctionController(functionService, router)
 }
 
@@ -70,7 +71,8 @@ func setupDescribeController(conn *gorm.DB, router *mux.Router) {
 }
 
 func setupLanguageController(conn *gorm.DB, router *mux.Router) {
+	userRepo := repo.NewUserRepository(conn)
 	languageRepo := repo.NewLanguageRepository(conn)
-	languageService := service.NewLanguageService(languageRepo)
+	languageService := service.NewLanguageService(languageRepo, userRepo)
 	controller.SetupLanguageController(languageService, router)
 }
