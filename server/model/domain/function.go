@@ -7,11 +7,11 @@ type Function struct {
 	IsDisplayed bool   `json:"is_displayed" gorm:"default:true"`
 
 	Language Language `json:",omitempty" gorm:"foreignKey:language_id"`
-	Likes    []User   `json:",omitempty" gorm:"many2many:likes"`
-	Dislikes []User   `json:",omitempty" gorm:"many2many:dislikes"`
+	Likes    []User   `json:",omitempty" gorm:"many2many:likes_on_functions"`
+	Dislikes []User   `json:",omitempty" gorm:"many2many:dislikes_on_functions"`
 }
 
-type FunctionDescribeDTO struct {
+type FunctionDTO struct {
 	ID         uint   `json:"id"`
 	Code       string `json:"code"`
 	LanguageID uint   `json:"language"`

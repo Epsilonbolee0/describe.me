@@ -42,10 +42,6 @@ func (repo *UserRepository) DeletePreferredLanguage(login string, id uint) {
 	repo.Conn.Model(&user).Association("PreferredLanguages").Delete(&language)
 }
 
-func (repo *UserRepository) UpdateName(login string, name string) error {
-	return repo.Conn.Model(&domain.User{Login: login}).Update("name", name).Error
-}
-
 func (repo *UserRepository) UpdateGroup(login string, group string) error {
 	return repo.Conn.Model(&domain.User{Login: login}).Update("group", group).Error
 }

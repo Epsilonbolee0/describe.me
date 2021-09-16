@@ -2,7 +2,6 @@ package domain
 
 type User struct {
 	Login    string `json:"login" gorm:"primaryKey"`
-	Name     string `json:"name"`
 	Password string `json:"password,omitempty"`
 	Group    string `json:"group,omitempty"`
 	Sex      bool   `json:"sex,omitempty"`
@@ -20,7 +19,6 @@ type UserAuthDTO struct {
 }
 
 type UserProfileDTO struct {
-	Name  string `json:"name"`
 	Group string `json:"group"`
 	Sex   bool   `json:"sex"`
 }

@@ -17,50 +17,50 @@ type DescribeController struct {
 func SetupDescribeController(describeService *service.DescribeService, router *mux.Router) {
 	controller := &DescribeController{describeService}
 
-	router.HandleFunc("/describe/add", controller.Create).Methods("POST")
-	router.HandleFunc("/describe/find", controller.Find).Methods("GET")
-	router.HandleFunc("/describe/rating", controller.Rating).Methods("GET")
+	router.HandleFunc("/description/add", controller.Create).Methods("POST")
+	router.HandleFunc("/description/list", controller.ListByFunction).Methods("GET")
+	router.HandleFunc("/description/rating", controller.Rating).Methods("GET")
+	router.HandleFunc("/description/update/code", controller.Delete).Methods("DELETE")
 
-	router.HandleFunc("/describe/update/code", controller.UpdateCode).Methods("PATCH")
-	router.HandleFunc("/describe/like", controller.Like).Methods("PATCH")
-	router.HandleFunc("/describe/dislike", controller.Dislike).Methods("PATCH")
-	router.HandleFunc("/describe/indifferent", controller.Indifferent).Methods("PATCH")
+	router.HandleFunc("/description/like", controller.Like).Methods("PATCH")
+	router.HandleFunc("/description/dislike", controller.Dislike).Methods("PATCH")
+	router.HandleFunc("/description/indifferent", controller.Indifferent).Methods("PATCH")
 }
 
 func (controller *DescribeController) Create(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
 		resp = utils.InvalidRequest()
 	} else {
-		resp = controller.describeService.Create(dto.LanguageID, dto.Code)
+		resp = controller.describeService.Create(dto.ID, dto.Content)
 	}
 
 	utils.Respond(w, resp)
 }
 
-func (controller *DescribeController) Find(w http.ResponseWriter, r *http.Request) {
+func (controller *DescribeController) ListByFunction(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
 		resp = utils.InvalidRequest()
 	} else {
-		resp = controller.describeService.Find(dto.ID)
+		resp = controller.describeService.ListByFunction(dto.ID)
 	}
 
 	utils.Respond(w, resp)
 }
 
-func (controller *DescribeController) UpdateCode(w http.ResponseWriter, r *http.Request) {
+func (controller *DescribeController) Delete(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
 		resp = utils.InvalidRequest()
 	} else {
-		resp = controller.describeService.UpdateCode(dto.ID, dto.Code)
+		resp = controller.describeService.Delete(dto.ID)
 	}
 
 	utils.Respond(w, resp)
@@ -68,7 +68,7 @@ func (controller *DescribeController) UpdateCode(w http.ResponseWriter, r *http.
 
 func (controller *DescribeController) Rating(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
 		resp = utils.InvalidRequest()
@@ -81,7 +81,7 @@ func (controller *DescribeController) Rating(w http.ResponseWriter, r *http.Requ
 
 func (controller *DescribeController) Like(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(dto); err != nil {
 		utils.Respond(w, utils.InvalidRequest())
@@ -99,7 +99,7 @@ func (controller *DescribeController) Like(w http.ResponseWriter, r *http.Reques
 
 func (controller *DescribeController) Dislike(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(dto); err != nil {
 		utils.Respond(w, utils.InvalidRequest())
@@ -117,7 +117,7 @@ func (controller *DescribeController) Dislike(w http.ResponseWriter, r *http.Req
 
 func (controller *DescribeController) Indifferent(w http.ResponseWriter, r *http.Request) {
 	var resp map[string]interface{}
-	dto := &domain.FunctionDescribeDTO{}
+	dto := &domain.DescribeDTO{}
 
 	if err := json.NewDecoder(r.Body).Decode(dto); err != nil {
 		utils.Respond(w, utils.InvalidRequest())

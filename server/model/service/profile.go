@@ -52,14 +52,6 @@ func (profile *ProfileService) CurrentKey(login string) map[string]interface{} {
 	return response
 }
 
-func (profile *ProfileService) UpdateName(login, name string) map[string]interface{} {
-	if err := profile.userRepo.UpdateName(login, name); err != nil {
-		return utils.ErrorOccured()
-	}
-
-	return utils.Updated()
-}
-
 func (profile *ProfileService) UpdateGroup(login, group string) map[string]interface{} {
 	if err := profile.userRepo.UpdateGroup(login, group); err != nil {
 		return utils.ErrorOccured()

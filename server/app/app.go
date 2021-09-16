@@ -40,6 +40,7 @@ func setupControllers(router *mux.Router) {
 
 	setupAuthController(conn, router)
 	setupProfileController(conn, router)
+	setupFunctionController(conn, router)
 	setupDescribeController(conn, router)
 	setupLanguageController(conn, router)
 }
@@ -56,9 +57,15 @@ func setupProfileController(conn *gorm.DB, router *mux.Router) {
 	controller.SetupProfileController(profileService, router)
 }
 
-func setupDescribeController(conn *gorm.DB, router *mux.Router) {
+func setupFunctionController(conn *gorm.DB, router *mux.Router) {
 	functionRepo := repo.NewFunctionRepository(conn)
-	describeService := service.NewDescribeService(functionRepo)
+	functionService := service.NewFunctionService(functionRepo)
+	controller.SetupFunctionController(functionService, router)
+}
+
+func setupDescribeController(conn *gorm.DB, router *mux.Router) {
+	describeRepo := repo.NewDescriptionRepository(conn)
+	describeService := service.NewDescribeService(describeRepo)
 	controller.SetupDescribeController(describeService, router)
 }
 
