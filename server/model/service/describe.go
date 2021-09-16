@@ -8,69 +8,69 @@ import (
 )
 
 type DescribeService struct {
-	functionRepo *repo.FunctionRepository
+	descriptionRepo *repo.DescriptionRepository
 }
 
-func NewDescribeService(functionRepo *repo.FunctionRepository) *DescribeService {
-	return &DescribeService{functionRepo}
+func NewDescribeService(descriptionRepo *repo.DescriptionRepository) *DescribeService {
+	return &DescribeService{descriptionRepo}
 }
 
 func (describe *DescribeService) Create(lang uint, code string) map[string]interface{} {
-	functionBuilder := builder.NewFunctionBuilder()
-	function := functionBuilder.
-		LanguageID(lang).
-		Code(code).
+	descriptionBuilder := builder.NewDescriptionBuilder()
+	description := descriptionBuilder.
+		FunctionID(lang).
+		Content(code).
 		Build()
 
-	if err := describe.functionRepo.Create(&function); err != nil {
+	if err := describe.descriptionRepo.Create(&description); err != nil {
 		return utils.ErrorOccured()
 	}
 
 	return utils.Created()
 }
 
-func (describe *DescribeService) Find(id uint) map[string]interface{} {
-	function, err := describe.functionRepo.Find(id)
+func (describe *DescribeService) ListByFunction(id uint) map[string]interface{} {
+	descriptions, err := describe.descriptionRepo.ListByFunction(id)
 	switch err {
 	case nil:
 		break
-	case gorm.ErrRecordNotFound:
+	case gorm.ErrEmptySlice:
 		return utils.NotFound()
 	default:
 		return utils.ErrorOccured()
 	}
 
 	response := utils.Found()
-	response["function"] = function
+	response["descriptions"] = descriptions
 	return response
 }
 
-func (describe *DescribeService) UpdateCode(id uint, code string) map[string]interface{} {
-	if err := describe.functionRepo.UpdateCode(id, code); err != nil {
+func (describe *DescribeService) Delete(id uint) map[string]interface{} {
+	if err := describe.descriptionRepo.Delete(id); err != nil {
 		return utils.ErrorOccured()
 	}
 
-	return utils.Updated()
+	return utils.Deleted()
 }
 
 func (describe *DescribeService) Rating(id uint) map[string]interface{} {
-	rating := describe.functionRepo.Rating(id)
+	rating := describe.descriptionRepo.Rating(id)
 	response := utils.Found()
 	response["rating"] = rating
 	return response
 }
 
 func (describe *DescribeService) Like(login string, id uint) map[string]interface{} {
-	describe.functionRepo.Like(login, id)
+	describe.descriptionRepo.Like(login, id)
 	return utils.Updated()
 }
 
 func (describe *DescribeService) Dislike(login string, id uint) map[string]interface{} {
-	describe.functionRepo.Dislike(login, id)
+	describe.descriptionRepo.Dislike(login, id)
 	return utils.Updated()
 }
 
 func (describe *DescribeService) Indifferent(login string, id uint) map[string]interface{} {
-	describe.functionRepo.Indifferent(login, id)
+	describe.descriptionRepo.Indifferent(login, id)
 	return utils.Deleted()
 }

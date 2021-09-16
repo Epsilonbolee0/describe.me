@@ -22,13 +22,6 @@ func (b *UserBuilder) Build() domain.User {
 	return user
 }
 
-func (b *UserBuilder) Name(name string) *UserBuilder {
-	b.actions = append(b.actions, func(user *domain.User) {
-		user.Name = name
-	})
-	return b
-}
-
 func (b *UserBuilder) Login(login string) *UserBuilder {
 	b.actions = append(b.actions, func(user *domain.User) {
 		user.Login = login

@@ -10,12 +10,12 @@ type FunctionRepository struct {
 }
 
 func NewFunctionRepository(conn *gorm.DB) *FunctionRepository {
-	return &FunctionRepository{Conn: conn}
+	return &FunctionRepository{conn}
 }
 
 func (repo *FunctionRepository) List(languages []uint) ([]domain.Function, error) {
 	var functions []domain.Function
-	err := repo.Conn.Scopes(isDisplayed, writtenIn(languages)).Order("rating(id) DESC").Find(&functions).Error
+	err := repo.Conn.Scopes(isDisplayed, writtenIn(languages)).Order("function_rating(id) DESC").Find(&functions).Error
 	return functions, err
 }
 
@@ -44,12 +44,9 @@ func (repo *FunctionRepository) UpdateCode(id uint, code string) error {
 }
 
 func (repo *FunctionRepository) Rating(id uint) int {
-	function := domain.Function{ID: id}
-
-	likeCnt := repo.Conn.Model(&function).Association("Likes").Count()
-	dislikeCnt := repo.Conn.Model(&function).Association("Dislikes").Count()
-
-	return int(likeCnt - dislikeCnt)
+	var rating int
+	repo.Conn.Raw("SELECT * FROM function_rating(?)", id).Scan(&rating)
+	return rating
 }
 
 func (repo *FunctionRepository) Like(login string, functionID uint) {
