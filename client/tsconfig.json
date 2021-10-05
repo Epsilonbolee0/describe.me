@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "components": ["components"],
+        "config": ["config"],
+        "styles": ["styles"],
+        "utils": ["utils"],
+        "pages": ["App/pages"],
+        "shared": ["shared"],
+        "store": ["store"],
+        "root": ["root"]
+      },
+      "noEmit": true,
+      "allowJs": true,
+      "sourceMap": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "skipLibCheck": true,
+      "module": "esnext",
+      "target": "es6",
+      "moduleResolution": "node",
+      "jsx": "react",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["src/**/*", "declarations.d.ts"],
+    "exclude": ["node_modules"]
+  }
