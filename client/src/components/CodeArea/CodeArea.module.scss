@@ -1,0 +1,18 @@
+@import "styles/variables.scss";
+
+.code_area {
+  @include shape(auto, auto, 32px);
+
+  background-color: $colorCodeArea;
+  border: none;
+  padding: $spacingUnit6;
+
+  margin: 0;
+}
+
+.code_area code {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 19px;
+  font-family: Inconsolata;
+}
