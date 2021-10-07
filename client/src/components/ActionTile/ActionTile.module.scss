@@ -1,0 +1,27 @@
+@import "styles/variables.scss";
+
+.action_tile {
+  @include shape(auto, auto, 32px);
+
+  max-width: 1208px;
+  min-width: 800px;
+  
+  padding: 32px;
+  background-color: $colorActionTile;
+}
+
+.action_header {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 38px;
+
+  margin-bottom: $spacingUnit6;
+}
+
+.lang_header {
+  font-family: Montserrat;
+  text-align: center;
+  align-items: center;
+}
