@@ -1,0 +1,42 @@
+.move_button {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 6px rgba(136, 148, 171, 0.2), 0px 20px 24px -24px rgba(71, 82, 107, 0.1);
+  border-radius: 58px;
+  cursor: pointer;
+
+  display: flex;
+
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+
+  justify-content: space-between;
+
+  width: 112px;
+
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+}
+
+.move_button:hover {
+  background: #F9F9F9;
+  box-shadow: 0px 2px 6px rgba(136, 148, 171, 0.4), 0px 20px 24px -24px rgba(71, 82, 107, 0.7);
+  border-radius: 58px;
+}
+
+.btn_text {
+  align-items: center;
+  display: flex;
+  
+  justify-content: center;
+
+  width: 58px;
+  height: 22px;
+}
+
+.btn_icon {
+  margin-top: 4px;
+}
