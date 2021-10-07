@@ -5,6 +5,7 @@ const ReactRefreshWebpackPlugin =
   require("@pmmmwh/react-refresh-webpack-plugin");
 const ForkTsCheckerPlugin = 
   require("fork-ts-checker-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const buildPath = path.resolve(__dirname, "dist");
 const publicPath = path.resolve(__dirname, "public");
@@ -20,8 +21,37 @@ const plugins = [
 
   !isProd && new ReactRefreshWebpackPlugin(),
   
-  new ForkTsCheckerPlugin()
+  new ForkTsCheckerPlugin(),
+  new MiniCssExtractPlugin({
+    filename: '[name]-[hash].css'
+  })
 ].filter(Boolean);
+
+
+const getSettingsForStyles = (withModules = false) => {
+  return [
+    MiniCssExtractPlugin.loader, 
+    !withModules ? "css-loader" : {
+      loader: "css-loader",
+      options: {
+        modules: {
+          localIdentName: !isProd ? 
+            '[path][name]__[local]' : 
+            '[hash][base64]'
+        }
+      },
+    },
+    {
+      loader: "postcss-loader",
+      options: {
+        postcssOptions: {
+          plugins: ["autoprefixer"]
+        }
+      }
+    },
+    "sass-loader"
+  ];
+}
 
 
 module.exports = {
@@ -39,6 +69,13 @@ module.exports = {
     port: 1488,
     hot: true
   },
+  resolve: {
+    extensions: [".jsx", ".js", ".tsx", ".ts"],
+    alias: {
+      components: path.join(srcPath, "components"),
+      styles: path.join(srcPath, "styles")
+    }
+  },
   module: {
     rules: [
       {
@@ -46,8 +83,13 @@ module.exports = {
         use: "babel-loader"
       },
       {
-        test: /\.css/,
-        use: ["style-loader", "css-loader"]
+        test: /\.module\.s?css$/,
+        use: getSettingsForStyles(true)
+      },
+      {
+        test: /\.s?css$/,
+        exclude: /\.module\.s?css$/,
+        use: getSettingsForStyles()
       }
     ]
   }
