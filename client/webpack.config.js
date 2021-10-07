@@ -90,6 +90,10 @@ module.exports = {
         test: /\.s?css$/,
         exclude: /\.module\.s?css$/,
         use: getSettingsForStyles()
+      },
+      {
+        test: /\.(png|svg|jpg)$/,
+        type: "asset/resource"
       }
     ]
   }
