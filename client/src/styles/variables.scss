@@ -1,0 +1,30 @@
+/* === Colors === */
+$colorBackground: #F3F6FD;
+$colorActionTile: #FFFFFF;
+$colorCodeArea: #F9F9F9;
+$colorCreateDescription: #FFF3D5;
+$colorReactDescription: #DBF6FD;
+$colorSignUpLink: #176DEA;
+
+
+/* === Spacing ===*/
+$spacingUnit5: 20px;
+$spacingUnit6: 24px;
+$spacingUnit8: 32px;
+$spacingUnit29: 116px;
+
+
+@mixin shape($width, $height: none, $border-radius: none) {
+  width: $width;
+
+  @if ($height == none) {
+    height: $width;
+  }
+  @else {
+    height: $height;
+  }
+
+  @if ($border-radius != none) {
+    border-radius: $border-radius;
+  }
+}
