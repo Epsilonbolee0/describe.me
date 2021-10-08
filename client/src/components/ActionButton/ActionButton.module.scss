@@ -1,0 +1,32 @@
+@import "styles/variables.scss";
+
+.accept, .decline {
+  @include shape(80px, 80px, $border-radius: 50%);
+
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  outline: none;
+  padding: 0;
+}
+
+.accept {
+  background-color: $colorAccept;
+}
+
+.accept:hover {
+  background-color: $colorAcceptHover;
+}
+
+.decline {
+  background-color: $colorDecline;
+  margin-top: $spacingUnit6;
+}
+
+.decline:hover {
+  background-color: $colorDeclineHover;
+}

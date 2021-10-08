@@ -29,3 +29,20 @@
   display: flex;
   text-align: center;
 }
+
+.action_wrapper {
+  display: flex;
+  justify-content: flex-start;
+
+  margin-top: $spacingUnit5;
+}
+
+.button_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}

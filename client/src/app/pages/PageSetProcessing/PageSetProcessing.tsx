@@ -14,7 +14,7 @@ const PageSetProcessing: React.FC<PageSetProcessingProps> = () => {
       <Header login="Epsilonbolee0"/>
 
       <div className={styles.tile_container}>
-        <ActionTile/>
+        <ActionTile evalMode={false}/>
       </div>
     </div>
   );
