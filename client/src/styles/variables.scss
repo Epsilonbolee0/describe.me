@@ -2,10 +2,14 @@
 $colorBackground: #F3F6FD;
 $colorActionTile: #FFFFFF;
 $colorCodeArea: #F9F9F9;
-$colorCreateDescription: #FFF3D5;
-$colorReactDescription: #DBF6FD;
+$colorEditDescription: #FFF3D5;
+$colorEvalDescription: #DBF6FD;
 $colorSignUpLink: #176DEA;
 $colorButtonLogOutHover: #E5E8EF;
+$colorAccept: #DCFCC3;
+$colorAcceptHover: #CCFFA4;
+$colorDecline: #FFD3E2;
+$colorDeclineHover: #FFBAD1;
 
 
 /* === Spacing ===*/
@@ -39,6 +43,12 @@ $spacingUnit29: 116px;
 
 @mixin text-header($size: 18px, $weight: 600) {
   font-family: Montserrat;
+  font-size: $size;
+  font-weight: $weight;
+}
+
+@mixin text-description($size: 18px, $weight: 500) {
+  font-family: Cousine;
   font-size: $size;
   font-weight: $weight;
 }
