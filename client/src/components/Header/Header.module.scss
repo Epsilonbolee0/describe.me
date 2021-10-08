@@ -1,0 +1,42 @@
+@import "styles/variables.scss";
+
+.header {
+  align-items: center;
+
+  display: flex;
+  height: 64px;
+
+  max-width: 1208px;
+  min-width: 808px;
+  
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.row_wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login {
+  @include text-header(20, 600);
+
+  margin: 0;
+}
+
+.logout_btn {
+  @include shape(30px, $border-radius: 8px);
+
+  background-color: $colorBackground;
+  border: none;
+  cursor: pointer;
+  
+  outline: none;
+  padding: 5px 7px 5px 3px;
+  margin-left: $spacingUnit4;
+}
+
+.logout_btn:hover {
+  background-color: $colorButtonLogOutHover;
+}
