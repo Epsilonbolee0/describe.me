@@ -5,9 +5,11 @@ $colorCodeArea: #F9F9F9;
 $colorCreateDescription: #FFF3D5;
 $colorReactDescription: #DBF6FD;
 $colorSignUpLink: #176DEA;
+$colorButtonLogOutHover: #E5E8EF;
 
 
 /* === Spacing ===*/
+$spacingUnit4: 16px;
 $spacingUnit5: 20px;
 $spacingUnit6: 24px;
 $spacingUnit8: 32px;
@@ -27,4 +29,16 @@ $spacingUnit29: 116px;
   @if ($border-radius != none) {
     border-radius: $border-radius;
   }
+}
+
+@mixin text-simple($size: 18px, $weight: 600) {
+  font-family: Inconsolata;
+  font-size: $size;
+  font-weight: $weight;
+}
+
+@mixin text-header($size: 18px, $weight: 600) {
+  font-family: Montserrat;
+  font-size: $size;
+  font-weight: $weight;
 }
