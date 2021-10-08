@@ -1,11 +1,11 @@
 import React from "react";
 
-import ActionTile from "components/ActionTile";
+import PageSetProcessing from "./pages/PageSetProcessing";
 
 const App = () => {
   return (
     <div className="App">
-      <ActionTile/>
+      <PageSetProcessing />
     </div>
   );
 };
