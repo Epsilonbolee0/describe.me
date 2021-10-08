@@ -73,7 +73,8 @@ module.exports = {
     extensions: [".jsx", ".js", ".tsx", ".ts"],
     alias: {
       components: path.join(srcPath, "components"),
-      styles: path.join(srcPath, "styles")
+      styles: path.join(srcPath, "styles"),
+      pages: path.join(srcPath, "app/pages")
     }
   },
   module: {

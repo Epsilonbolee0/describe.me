@@ -3,10 +3,10 @@
       "baseUrl": "./src",
       "paths": {
         "components": ["components"],
-        "config": ["config"],
         "styles": ["styles"],
+        "pages": ["app/pages"],
+        "config": ["config"],
         "utils": ["utils"],
-        "pages": ["App/pages"],
         "shared": ["shared"],
         "store": ["store"],
         "root": ["root"]
