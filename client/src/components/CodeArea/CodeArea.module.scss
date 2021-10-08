@@ -11,8 +11,7 @@
 }
 
 .code_area code {
-  font-weight: 500;
-  font-size: 18px;
+  @include text-simple(18px, 500);
+
   line-height: 19px;
-  font-family: Inconsolata;
 }

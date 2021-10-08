@@ -3,11 +3,13 @@
 .action_tile {
   @include shape(auto, auto, 32px);
 
+  background-color: $colorActionTile;
+  box-sizing: border-box;
+
   max-width: 1208px;
   min-width: 800px;
   
-  padding: 32px;
-  background-color: $colorActionTile;
+  padding: $spacingUnit8;
 }
 
 .action_header {
@@ -21,7 +23,9 @@
 }
 
 .lang_header {
-  font-family: Montserrat;
-  text-align: center;
+  @include text-header();
+  
   align-items: center;
+  display: flex;
+  text-align: center;
 }
