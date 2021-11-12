@@ -12,7 +12,11 @@
 *.out
 
 # config
-server/config/config.yml
+config.yml
+.idea/
+
+# deprecated
+deprecated_server/
 
 # Dependency directories (remove the comment below to include it)
 # vendor/

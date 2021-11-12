@@ -14,6 +14,6 @@ Figma - https://www.figma.com/file/TD9Mrz7LARoAlIM8o2jR6U/describe.me?node-id=0%
 
 ### Use-case диаграмма
 
-![](./Documents/use-case.png)
+![](docs/use-case.png)
 
 ### ER-диаграмма сущностей системы
