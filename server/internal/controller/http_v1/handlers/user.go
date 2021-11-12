@@ -6,8 +6,9 @@ import (
 	"describe.me/internal/utils/messagez"
 	. "describe.me/internal/utils/response"
 	"describe.me/pkg/logger"
-
-	"github.com/gin-gonic/gin"
+	"encoding/json"
+	"github.com/go-chi/chi/v5"
+	"net/http"
 )
 
 type userHandler struct {
@@ -15,14 +16,13 @@ type userHandler struct {
 	Logger  logger.Interface
 }
 
-func NewUserHandler(rg *gin.RouterGroup, serv *service.UserService, log logger.Interface) {
+func NewUserHandler(router *chi.Mux, serv *service.UserService, log logger.Interface) {
 	handler := &userHandler{serv, log}
 
-	group := rg.Group("/auth")
-	{
-		group.GET("/login", handler.login)
-		group.POST("/register", handler.register)
-	}
+	router.Route("/auth", func(r chi.Router) {
+		r.Get("/login", handler.login)
+		r.Post("/register", handler.register)
+	})
 }
 
 // @Summary     Login
@@ -36,23 +36,23 @@ func NewUserHandler(rg *gin.RouterGroup, serv *service.UserService, log logger.I
 // @Failure     403 {object} resp
 // @Failure 	500 {object} resp
 // @Router      /auth/login [get]
-func (handler *userHandler) login(c *gin.Context) {
+func (handler *userHandler) login(w http.ResponseWriter, r *http.Request) {
 	const logTrace = "http - v1 - login"
 	var req ts.UserLoginRequest
 
-	if err := c.ShouldBindJSON(&req); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		handler.Logger.Error(err, logTrace)
-		WithError(c, err)
+		WithError(w, err)
 		return
 	}
 
-	user, err := handler.Service.Login(c.Request.Context(), &req)
+	user, err := handler.Service.Login(r.Context(), &req)
 	if err != nil {
 		handler.Logger.Error(err, logTrace)
-		WithError(c, err)
+		WithError(w, err)
 	}
 
-	WithoutError(c, messagez.OK, ts.UserLoginResponse{User: user})
+	WithoutError(w, messagez.OK, ts.UserLoginResponse{User: user})
 }
 
 // @Summary     Register
@@ -66,21 +66,21 @@ func (handler *userHandler) login(c *gin.Context) {
 // @Failure     403 {object} resp
 // @Failure     500 {object} resp
 // @Router      /auth/register [post]
-func (handler *userHandler) register(c *gin.Context) {
+func (handler *userHandler) register(w http.ResponseWriter, r *http.Request) {
 	const logTrace = "http - v1 - register"
 	var req ts.UserRegisterRequest
 
-	if err := c.ShouldBindJSON(&req); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		handler.Logger.Error(err, logTrace)
-		WithError(c, err)
+		WithError(w, err)
 		return
 	}
 
-	err := handler.Service.Register(c.Request.Context(), &req)
+	err := handler.Service.Register(r.Context(), &req)
 	if err != nil {
 		handler.Logger.Error(err, logTrace)
-		WithError(c, err)
+		WithError(w, err)
 	}
 
-	WithoutError(c, messagez.OK, ts.UserRegisterResponse{})
+	WithoutError(w, messagez.OK, ts.UserRegisterResponse{})
 }

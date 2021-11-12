@@ -6,6 +6,12 @@ type (
 		HTTP     `yaml:"http"`
 		Logger   `yaml:"logger"`
 		Postgres `yaml:"postgres"`
+		Shelter  `yaml:"shelter"`
+	}
+
+	// Shelter -.
+	Shelter struct {
+		Secret string `env-required:"true" yaml:"name"    env:"secret"`
 	}
 
 	// App -.

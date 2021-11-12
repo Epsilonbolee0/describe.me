@@ -2,16 +2,18 @@
 package http_v1
 
 import (
-	"describe.me/internal/controller/http_v1/handlers"
 	"net/http"
 
+	"describe.me/internal/controller/http_v1/handlers"
 	"describe.me/internal/service"
 	"describe.me/pkg/logger"
-	"github.com/gin-gonic/gin"
 
+	chiprometheus "github.com/766b/chi-prometheus"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/jwtauth"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 // NewRouter -.
@@ -22,27 +24,39 @@ import (
 // @host        localhost:8080
 // @BasePath    /v1
 func NewRouter(
-	handler *gin.Engine,
+	router *chi.Mux,
 	log logger.Interface,
+	auth *jwtauth.JWTAuth,
 	userService *service.UserService) {
 
-	// Options
-	handler.Use(gin.Logger())
-	handler.Use(gin.Recovery())
+	// Middleware
+	router.Use(middleware.RequestID)
+	router.Use(middleware.RealIP)
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
+	router.Use(middleware.Heartbeat("/ping"))
+
+	// Prometheus
+	router.Use(chiprometheus.NewMiddleware("describe.me"))
 
 	// Swagger
-	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
-	handler.GET("/swagger/*any", swaggerHandler)
+	router.Mount("/swagger", httpSwagger.WrapHandler)
 
-	// K8s probe
-	handler.GET("/health", func(c *gin.Context) { c.Status(http.StatusOK) })
+	// Public routes
+	router.Group(func(r chi.Router) {
+		handlers.NewUserHandler(router, userService, log)
+	})
 
-	// Prometheus metrics
-	handler.GET("/metrics", gin.WrapH(promhttp.Handler()))
+	// Private routes
+	router.Group(func(r chi.Router) {
+		router.Use(jwtauth.Verifier(auth))
+		router.Use(jwtauth.Authenticator)
 
-	// Routers
-	h := handler.Group("/v1")
-	{
-		handlers.NewUserHandler(h, userService, log)
-	}
+		router.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+		})
+
+		router.Handle("/metrics", promhttp.Handler())
+	})
+
 }

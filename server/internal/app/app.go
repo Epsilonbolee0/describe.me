@@ -2,7 +2,9 @@
 package app
 
 import (
+	jwt_auth "describe.me/pkg/jwt-auth"
 	"fmt"
+	"github.com/go-chi/chi/v5"
 	"os"
 	"os/signal"
 	"syscall"
@@ -14,13 +16,11 @@ import (
 	"describe.me/pkg/httpserver"
 	"describe.me/pkg/logger"
 	"describe.me/pkg/postgres"
-
-	"github.com/gin-gonic/gin"
 )
 
 // Run creates objects via constructors.
 func Run(cfg *config.Config) {
-	l := logger.New(cfg.Logger.Level)
+	log := logger.New(cfg.Logger.Level)
 
 	// Repository
 	pg, err := postgres.New(
@@ -30,7 +30,7 @@ func Run(cfg *config.Config) {
 	)
 
 	if err != nil {
-		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
+		log.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
 	defer pg.Close()
 
@@ -39,9 +39,18 @@ func Run(cfg *config.Config) {
 		repository.NewUserRepository(pg),
 	)
 
+	// Auth
+	jwtAuth := jwt_auth.NewJWTAuth(cfg.Shelter.Secret)
+
 	// HTTP Server
-	handler := gin.New()
-	http_v1.NewRouter(handler, l, userService)
+	handler := chi.NewRouter()
+	http_v1.NewRouter(
+		handler,
+		log,
+		jwtAuth,
+		userService,
+	)
+
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal
@@ -50,14 +59,14 @@ func Run(cfg *config.Config) {
 
 	select {
 	case s := <-interrupt:
-		l.Info("app - Run - signal: " + s.String())
+		log.Info("app - Run - signal: " + s.String())
 	case err = <-httpServer.Notify():
-		l.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
+		log.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
 	}
 
 	// Shutdown
 	err = httpServer.Shutdown()
 	if err != nil {
-		l.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
+		log.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
 	}
 }

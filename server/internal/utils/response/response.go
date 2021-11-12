@@ -1,16 +1,30 @@
 package response
 
-import "github.com/gin-gonic/gin"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 type resp struct {
 	Error string `json:"error" example:"message"`
 }
 
-func WithError(c *gin.Context, err error) {
+func WithError(w http.ResponseWriter, err error) {
 	msg := err.Error()
-	c.AbortWithStatusJSON(StatusByMessage(msg), resp{msg})
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(StatusByMessage(msg))
+
+	json.NewEncoder(w).Encode(Message(msg))
 }
 
-func WithoutError(c *gin.Context, msg string, obj interface{}) {
-	c.JSON(StatusByMessage(msg), obj)
+func WithoutError(w http.ResponseWriter, msg string, obj interface{}) {
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(StatusByMessage(msg))
+
+	json.NewEncoder(w).Encode(obj)
+}
+
+func Message(message string) map[string]interface{} {
+	return map[string]interface{}{"message": message}
 }
