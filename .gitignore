@@ -12,7 +12,7 @@
 *.out
 
 # config
-config.yml
+server/config/config.yml
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
