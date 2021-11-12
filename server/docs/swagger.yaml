@@ -1,0 +1,102 @@
+definitions:
+  response.resp:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+  transport.UserLoginRequest:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  transport.UserLoginResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  transport.UserRegisterRequest:
+    properties:
+      email:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  transport.UserRegisterResponse:
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/login:
+    get:
+      consumes:
+      - application/json
+      description: Login as student
+      operationId: login
+      parameters:
+      - description: comment
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/transport.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/transport.UserLoginResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.resp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.resp'
+      summary: Login
+      tags:
+      - user
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a student
+      operationId: register
+      parameters:
+      - description: comment
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/transport.UserRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/transport.UserRegisterResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.resp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.resp'
+      summary: Register
+      tags:
+      - user
+swagger: "2.0"
