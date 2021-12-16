@@ -1,0 +1,32 @@
+@import "styles/variables.scss";
+
+.button_accept, .button_decline {
+  @include shape(200px, 40px, $border-radius: 20px);
+  @include fontButton();
+
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+}
+
+.button_accept {
+  background-color: $colorAccent;
+
+  &:hover {
+    background-color: $colorAccentHover;
+  }
+}
+
+.button_decline {
+  background-color: $colorButtonAdditional;
+
+  &:hover {
+    background-color: $colorButtonAdditionalHover;
+  }
+}
