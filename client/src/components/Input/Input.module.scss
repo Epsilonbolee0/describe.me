@@ -1,0 +1,20 @@
+@import "styles/variables.scss";
+
+.input {
+  @include shape(300px, 40px, $border-radius: 20px);
+  @include fontButton(black);
+
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+
+  padding: $spacingUnit2 $spacingUnit4;
+
+  &:hover {
+    box-shadow: $shadowAccent;
+  }
+
+  &::placeholder {
+    @include fontButton($colorTextAdditional)
+  }
+}
