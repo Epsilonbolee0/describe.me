@@ -74,7 +74,8 @@ module.exports = {
     alias: {
       components: path.join(srcPath, "components"),
       styles: path.join(srcPath, "styles"),
-      pages: path.join(srcPath, "app/pages")
+      pages: path.join(srcPath, "app/pages"),
+      utils: path.join(srcPath, "utils")
     }
   },
   module: {
