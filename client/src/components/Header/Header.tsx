@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({login}) => {
       <MainIcon />
       
       <div className={styles.row_wrapper}>
-        <p className={styles.login}>{login}</p>
+        <button className={styles.login}>{login}</button>
         <button title="Выйти" className={styles.logout_btn}><LogOutIcon /></button>
       </div>
     </div>
