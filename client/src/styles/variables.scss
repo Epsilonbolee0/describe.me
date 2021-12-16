@@ -1,18 +1,36 @@
 /* === Colors === */
-$colorBackground: #F3F6FD;
-$colorActionTile: #FFFFFF;
-$colorCodeArea: #F9F9F9;
-$colorEditDescription: #FFF3D5;
-$colorEvalDescription: #DBF6FD;
-$colorSignUpLink: #176DEA;
-$colorButtonLogOutHover: #E5E8EF;
-$colorAccept: #DCFCC3;
-$colorAcceptHover: #CCFFA4;
-$colorDecline: #FFD3E2;
-$colorDeclineHover: #FFBAD1;
+$colorGlobalBackground: #F3F6FD;
+$colorGlobalBackgroundHover: #DCE6F9;
+$colorTileBackgroundPurple: #DEDBFD;
+$colorTileBackgroundWhite: #FFFFFF;
+$colorTileBackgroundYellow: #FCECC3;
+$colorTileBackgroundBlue: #DBF6FD;
+$colorButtonAccept: #CCFFA4;
+$colorButtonAcceptHover: #DCFCC3;
+$colorButtonDecline: #FFBAD1;
+$colorButtonDeclineHover: #F8D0DE;
+$colorAccent: #176DEA;
+$colorAccentHover: #3A85F3;
+$colorCodeField: #F9F9F9;
+$colorButtonNavigateHover: #F8F8F8;
+$colorTextAdditional: #B8B8B8;
+$colorBackgroundPopup: rgba(0, 0, 0, 0.3);
+$colorButtonAdditional: #B8B8B8;
+$colorButtonAdditionalHover: #C5C5C5;
+$colorCheckboxHover: rgba(0, 0, 0, 0.05);
+$colorButtonAdditional2: #D8D8D8;
+
+
+/* === Effects ===*/
+$shadowAccent: 0px 2px 6px rgba(136, 148, 171, 0.2), 0px 20px 24px -24px rgba(71, 82, 107, 0.1);
+$shadowAccentHover: 0px 2px 6px rgba(136, 148, 171, 0.4), 0px 20px 24px -24px rgba(71, 82, 107, 0.7);
+$shadowWindow: 0px -1px 4px rgba(136, 148, 171, 0.2), 0px 20px 24px rgba(71, 82, 107, 0.1);
 
 
 /* === Spacing ===*/
+$spacingUnit1: 4px;
+$spacingUnit2: 8px;
+$spacingUnit3: 12px;
 $spacingUnit4: 16px;
 $spacingUnit5: 20px;
 $spacingUnit6: 24px;
@@ -20,35 +38,68 @@ $spacingUnit8: 32px;
 $spacingUnit29: 116px;
 
 
+/* === Fonts === */
+@mixin fontHeader1() {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@mixin fontHeader2() {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+@mixin fontSimpleText() {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+@mixin fontButton($color: $colorTileBackgroundWhite) {
+  font-family: Cousine;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 19px;
+
+  color: $color;
+}
+
+@mixin fontCode() {
+  font-family: Inconsolata;
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-size: 18px;
+  line-height: 19px;
+}
+
+@mixin fontDescription() {
+  font-family: Cousine;
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-size: 18px;
+  line-height: 19px;
+}
+
+
+/* === Other === */
 @mixin shape($width, $height: none, $border-radius: none) {
   width: $width;
-
   @if ($height == none) {
     height: $width;
   }
   @else {
     height: $height;
   }
-
   @if ($border-radius != none) {
     border-radius: $border-radius;
   }
-}
-
-@mixin text-simple($size: 18px, $weight: 600) {
-  font-family: Inconsolata;
-  font-size: $size;
-  font-weight: $weight;
-}
-
-@mixin text-header($size: 18px, $weight: 600) {
-  font-family: Montserrat;
-  font-size: $size;
-  font-weight: $weight;
-}
-
-@mixin text-description($size: 18px, $weight: 500) {
-  font-family: Cousine;
-  font-size: $size;
-  font-weight: $weight;
 }
