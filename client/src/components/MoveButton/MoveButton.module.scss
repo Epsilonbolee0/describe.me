@@ -1,9 +1,14 @@
-.move_button {
-  background: #FFFFFF;
-  box-shadow: 0px 2px 6px rgba(136, 148, 171, 0.2), 0px 20px 24px -24px rgba(71, 82, 107, 0.1);
-  border-radius: 58px;
-  cursor: pointer;
+@import "styles/variables.scss";
 
+.move_button {
+  @include shape(112px, 40px, $border-radius: 20px);
+
+  background: $colorTileBackgroundWhite;
+  box-shadow: $shadowAccent;
+  border: none;
+  border-radius: $spacingUnit5;
+  cursor: pointer;
+  
   display: flex;
 
   font-family: Montserrat;
@@ -12,19 +17,14 @@
   font-size: 14px;
   line-height: 17px;
 
-  justify-content: space-between;
-
-  width: 112px;
-
-  border: none;
+  justify-content: center;
+  
   outline: none;
-  padding: 8px 16px;
-}
+  padding: $spacingUnit3;
 
-.move_button:hover {
-  background: #F9F9F9;
-  box-shadow: 0px 2px 6px rgba(136, 148, 171, 0.4), 0px 20px 24px -24px rgba(71, 82, 107, 0.7);
-  border-radius: 58px;
+  &:hover {
+    box-shadow: $shadowAccentHover;
+  }
 }
 
 .btn_text {
@@ -33,10 +33,9 @@
   
   justify-content: center;
 
-  width: 58px;
-  height: 22px;
+  height: 16px;
 }
 
-.btn_icon {
-  margin-top: 4px;
+.left_item {
+  margin-right: $spacingUnit3;
 }
