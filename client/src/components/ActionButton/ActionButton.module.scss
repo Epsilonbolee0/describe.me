@@ -3,11 +3,13 @@
 .accept, .decline {
   @include shape(80px, 80px, $border-radius: 50%);
 
+  align-items: center;
   border: none;
   box-sizing: border-box;
+
   cursor: pointer;
+
   display: flex;
-  align-items: center;
   justify-content: center;
   
   outline: none;
@@ -15,18 +17,18 @@
 }
 
 .accept {
-  background-color: $colorAccept;
-}
+  background-color: $colorButtonAccept;
 
-.accept:hover {
-  background-color: $colorAcceptHover;
+  &:hover {
+    background-color: $colorButtonAcceptHover;
+  }
 }
 
 .decline {
-  background-color: $colorDecline;
+  background-color: $colorButtonDecline;
   margin-top: $spacingUnit6;
-}
 
-.decline:hover {
-  background-color: $colorDeclineHover;
+  &:hover {
+    background-color: $colorButtonDeclineHover;
+  }
 }
