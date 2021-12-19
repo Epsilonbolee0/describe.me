@@ -1,7 +1,7 @@
 @import "styles/variables.scss";
 
 .edit, .eval {
-  @include text-description(16px);
+  @include fontDescription();
 
   border: none;
   border-radius: 32px;
@@ -19,9 +19,9 @@
 }
 
 .edit {
-  background-color: $colorEditDescription;
+  background-color: $colorTileBackgroundYellow;
 }
 
 .eval {
-  background-color: $colorEvalDescription;
+  background-color: $colorTileBackgroundBlue;
 }

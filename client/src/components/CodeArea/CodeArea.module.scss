@@ -3,15 +3,14 @@
 .code_area {
   @include shape(auto, auto, 32px);
 
-  background-color: $colorCodeArea;
+  background-color: $colorCodeField;
   border: none;
   padding: $spacingUnit6;
 
   margin: 0;
-}
 
-.code_area code {
-  @include text-simple(18px, 500);
-
-  line-height: 19px;
+  & code {
+    @include fontCode();
+    line-height: 19px;
+  }
 }

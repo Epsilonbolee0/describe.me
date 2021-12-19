@@ -1,16 +1,17 @@
 import React from "react";
+import { ActionType } from "utils/types";
 
 import styles from "./DescriptionArea.module.scss";
 
 type DescriptionAreaProps = {
-  editMode: boolean,
+  mode: number,
   description?: string
 };
 
 const MIN_TEXTAREA_HEIGHT = 200;
 
 const DescriptionArea: React.FC<DescriptionAreaProps> = ({
-  editMode, description=""
+  mode, description=""
 }) => {
   const textareaRef = React.useRef<null | HTMLTextAreaElement>(null);
   const [value, setValue] = React.useState("");
@@ -33,10 +34,10 @@ const DescriptionArea: React.FC<DescriptionAreaProps> = ({
       onChange={onChange}
       ref={textareaRef}
       placeholder={"Ваше описание..."}
-      className={editMode ? styles.edit : styles.eval}
-      readOnly={!editMode}
+      className={mode ? styles.edit : styles.eval}
+      readOnly={!mode}
+      defaultValue={mode ? "" : description}
     >
-      {description}
     </textarea>
   );
 };

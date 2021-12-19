@@ -3,7 +3,7 @@
 .action_tile {
   @include shape(auto, auto, 32px);
 
-  background-color: $colorActionTile;
+  background-color: $colorTileBackgroundWhite;
   box-sizing: border-box;
 
   max-width: 1208px;
@@ -23,7 +23,7 @@
 }
 
 .lang_header {
-  @include text-header();
+  @include fontHeader1();
   
   align-items: center;
   display: flex;
