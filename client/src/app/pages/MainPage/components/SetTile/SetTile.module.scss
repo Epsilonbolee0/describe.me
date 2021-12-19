@@ -1,0 +1,52 @@
+@import "styles/variables.scss";
+
+.set_tile {
+  @include shape(270px, 300px, 32px);
+
+  align-items: center;
+  background-color: $colorTileBackgroundWhite;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: $spacingUnit8;
+}
+
+.tile_header {
+  @include fontHeader2();
+
+  height: 72px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  // white-space: nowrap;
+}
+
+.info_wrapper {
+  display: flex;
+  flex-direction: column;
+
+  margin: 42px 0;
+}
+
+.info, .info_item {
+  @include fontSimpleText();
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.info {
+  color: $colorTextAdditional;
+}
+
+.info_item {
+  color: black;
+  margin-left: 4px;
+}
+
+.status_wrapper {
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-start;
+}
