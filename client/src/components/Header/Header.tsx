@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./Header.module.scss";
 import LogOutIcon from "components/LogOutIcon";
-import MainIcon from "components/MainIcon";
+import MainLogo from "components/MainLogo";
 
 type HeaderProps = {
   login: string
@@ -11,7 +11,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({login}) => {
   return (
     <div className={styles.header}>
-      <MainIcon />
+      <MainLogo isLarge={false}/>
       
       <div className={styles.row_wrapper}>
         <button className={styles.login}>{login}</button>

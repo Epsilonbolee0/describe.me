@@ -11,7 +11,7 @@
   
   margin: 0 auto;
   justify-content: space-between;
-  padding: 0 32px;
+  padding: 0 $spacingUnit8;
 }
 
 .row_wrapper {
@@ -22,13 +22,10 @@
 
 .login {
   @include fontHeader2();
-
-  width: auto;
-  height: 32px;
+  @include shape(auto, 32px, 16px);
 
   background-color: $colorGlobalBackground;
   border: none;
-  border-radius: 16px;
   cursor: pointer;
 
   margin: 0;
