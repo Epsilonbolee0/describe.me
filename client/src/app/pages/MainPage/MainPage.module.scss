@@ -1,0 +1,12 @@
+.main_page {
+  max-width: 1208px;
+  min-width: 808px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  column-gap: 32px;
+  row-gap: 32px;
+  justify-content: center;
+}
