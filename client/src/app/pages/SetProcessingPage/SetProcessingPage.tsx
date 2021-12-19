@@ -1,11 +1,10 @@
 import React from "react";
 
-import styles from "./PageSetProcessing.module.scss";
+import styles from "./SetProcessingPage.module.scss";
 import ActionTile from "components/ActionTile";
-import Header from "components/Header";
 import { ActionType } from "utils/types";
 
-type PageSetProcessingProps = {
+type SetProcessingPageProps = {
 
 }
 
@@ -29,7 +28,7 @@ const descrTemp = `Функция представляет собой цикл f
  что-то к чему то прибавляет, сообщение выводит, а возвращает забавную фразу`;
 
 
-const PageSetProcessing: React.FC<PageSetProcessingProps> = () => {
+const SetProcessingPage: React.FC<SetProcessingPageProps> = () => {
   return (
     <div>
       <div className={styles.tile_container}>
@@ -39,4 +38,4 @@ const PageSetProcessing: React.FC<PageSetProcessingProps> = () => {
   ); 
 };
 
-export default PageSetProcessing;
+export default SetProcessingPage;
