@@ -1,7 +1,7 @@
 @import "styles/variables.scss";
 
 .login_tile {
-  @include shape(370px, 294px, $border-radius: 32px);
+  @include shape(370px, 294px, 32px);
 
   align-items: center;
   box-shadow: $shadowWindow;
